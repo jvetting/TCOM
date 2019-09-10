@@ -11,12 +11,14 @@ public class Main extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture img;
 	BitmapFont font;
+	HexTile hex;
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
 		font = new BitmapFont();
+		hex = new HexTile();
 	}
 
 	@Override
@@ -27,6 +29,7 @@ public class Main extends ApplicationAdapter {
 		font.draw(batch, "Happy Coding", Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
 		batch.draw(img, 0, 0);
 		batch.end();
+		hex.drawHex();
 	}
 	
 	@Override
@@ -34,5 +37,6 @@ public class Main extends ApplicationAdapter {
 		batch.dispose();
 		font.dispose();
 		img.dispose();
+		hex.dispose();
 	}
 }
