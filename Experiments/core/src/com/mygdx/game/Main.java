@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -14,6 +15,7 @@ public class Main extends ApplicationAdapter {
 	float[] xOff;
 	float[] yOff;
 	HexTile[] hex;
+	int r,g,b;
 	
 	@Override
 	public void create () {
@@ -25,6 +27,9 @@ public class Main extends ApplicationAdapter {
 		setOffsets();
 		hex = new HexTile[12];
 		int i;
+		r = 1;
+		g = 0;
+		b = 0;
 		for (i = 0; i < hex.length; i++){
 			hex[i] = new HexTile(xOff[i], yOff[i]);
 		}
@@ -59,8 +64,23 @@ public class Main extends ApplicationAdapter {
 
 	@Override
 	public void render () {
-		Gdx.gl.glClearColor(1, 0, 0, 1);
+		//r = 1, g = 0, b = 0
+		Gdx.gl.glClearColor(r, g, b, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT)){
+			r = 0;
+		}
+		if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)){
+			g = 1;
+		}
+		if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN)){
+			b = 1;
+		}
+		if(Gdx.input.isKeyJustPressed(Input.Keys.UP)){
+			r = 1;
+			g = 0;
+			b = 0;
+		}
 		batch.begin();
 		//font.draw(batch, "Happy Coding", Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
 		//batch.draw(img, 0, 0);
