@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import java.util.Random;//
 
 public class Main extends ApplicationAdapter {
 	SpriteBatch batch;
@@ -16,6 +17,11 @@ public class Main extends ApplicationAdapter {
 	float[] yOff;
 	HexTile[] hex;
 	int r,g,b;
+	HexTile[][] hexMap;
+	/**
+	int tiles;
+	 Menu menu;
+	**/
 	
 	@Override
 	public void create () {
@@ -26,13 +32,32 @@ public class Main extends ApplicationAdapter {
 		yOff = new float[12];
 		setOffsets();
 		hex = new HexTile[12];
+		hexMap = new HexTile[4][5];//assuming the grid is 4x5
+
+		/**
+		 * genTiles();
+		 * menu = new Menu();
+		**/
+
+
 		int i;
 		r = 1;
 		g = 0;
 		b = 0;
-		for (i = 0; i < hex.length; i++){
-			hex[i] = new HexTile(xOff[i], yOff[i],1);
+		for (i = 0; i < hex.length; i++){//for now, the 1D array will be created before the 2D array
+			hex[i] = new HexTile(xOff[i], yOff[i],1, i);
 		}
+
+		i = 0;
+		for(int y = 0; y < 4 && i < 12; y++) {//copy the 2D array from the 1D while staying under 12 so to not copy null hexes
+			for(int x = 0; x < 5 && i < 12; x++)
+			{
+				hex[i].order = i;
+				hexMap[y][x] = hex[i];
+				i++;
+			}
+		 }
+
 	}
 
 	private void setOffsets(){
@@ -62,32 +87,88 @@ public class Main extends ApplicationAdapter {
 		yOff[11] = 200f;
 	}
 
+	public void genTiles()//to be used to create 2D array independent of 1D array. also gives each hex a random color
+	{
+		Random rand = new Random();
+		int i = 0;
+		int color = 0;
+		for(int y = 0; y < 4 && i < 12; y++)
+		{
+			for(int x = 0; x < 5 && i < 12; x++)
+			{
+				color = rand.nextInt(3);//color will be red, blue or green
+				hexMap[y][x] = new HexTile(xOff[i], yOff[i], color, i);
+				i++;
+			}
+		}
+	}
+
+
 	@Override
 	public void render () {
 		//r = 1, g = 0, b = 0
 		Gdx.gl.glClearColor(r, g, b, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT)){
+		if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
 			r = 0;
 		}
-		if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)){
+		if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
 			g = 1;
 		}
-		if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN)){
+		if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
 			b = 1;
 		}
-		if(Gdx.input.isKeyJustPressed(Input.Keys.UP)){
+		if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
 			r = 1;
 			g = 0;
 			b = 0;
 		}
-		batch.begin();
+		//batch.begin();
 		//font.draw(batch, "Happy Coding", Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
 		//batch.draw(img, 0, 0);
-		batch.end();
+		//batch.end();
+
+		/**this was commented out so that the 2D array is being printed by itself
 		for (int i = 0; i < hex.length; i++) {
 			hex[i].drawHex();
 		}
+		batch.begin();
+		//menu.drawMenu();//to be implemented when menu is working
+		//if(Gdx.input.isKeyJustPressed(Input.Keys.I)) {
+			for (int i = 0; i < hex.length; i++) {
+				//hex[i].drawHex();
+				//
+				//batch.begin();
+				font.draw(batch, hex[i].character.name, hex[i].centerX, hex[i].centerY);
+				font.draw(batch, hex[i].character.bio, hex[i].centerX, hex[i].centerY-15);
+				//batch.draw(img, 0, 0);
+				//batch.end();
+				//
+			}
+
+
+		//}
+		batch.end();
+		 **/
+
+
+		int i = 0;//i keeps track of the order of the hexes, essentially showing the 2D array itself
+		for(int y = 0; y < 4 && i < 12; y++) {//print the values of the 2D array
+			for(int x = 0; x < 5 && i < 12; x++)
+			{
+				hexMap[y][x].drawHex();
+				batch.begin();
+				font.draw(batch, hex[i].character.name, hex[i].centerX, hex[i].centerY);
+				font.draw(batch, hex[i].character.bio, hex[i].centerX, hex[i].centerY-15);
+				//show that the order of hexes is correct by printing currentHex.order "==" i
+				font.draw(batch, Integer.toString(hex[i].order), hex[i].centerX, hex[i].centerY-30);
+				font.draw(batch, " == ", hex[i].centerX+15, hex[i].centerY-30);
+				font.draw(batch, Integer.toString(i), hex[i].centerX+40, hex[i].centerY-30);
+				batch.end();
+				i++;
+			}
+		}
+
 	}
 	
 	@Override
@@ -100,5 +181,15 @@ public class Main extends ApplicationAdapter {
 		}
 		xOff = null;
 		yOff = null;
+
+		/**
+		for (int y = 0; y < 12; y++)
+		{
+			for(int x = 0; x < 12; x++)
+			{
+				hexMap[y][x].dispose();
+			}
+		}
+		**/
 	}
 }

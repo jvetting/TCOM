@@ -10,13 +10,22 @@ public class HexTile extends ApplicationAdapter {
     float red = 0f;
     float blue = 0f;
     float green = 0f;
-
-    HexTile(float xOff, float yOff, int ref) {
+    //Pc player;
+    float centerX;
+    float centerY;
+    Character character;
+    int order;
+    HexTile(float xOff, float yOff, int ref, int order) {//
         shapeRenderer = new ShapeRenderer();
         vertices = new float[12];
         tempSetVertices(xOff, yOff);
         refrence = ref;
 
+        //player = null;
+        centerX = xOff+25;
+        centerY = yOff+50;
+        character = new Npc();
+        order = order;
     }
 
     private void tempSetVertices(float xOff, float yOff){
