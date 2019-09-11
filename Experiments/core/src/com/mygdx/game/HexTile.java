@@ -6,11 +6,17 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 public class HexTile extends ApplicationAdapter {
     ShapeRenderer shapeRenderer;
     private float[] vertices;
+    int refrence;
+    float red = 0f;
+    float blue = 0f;
+    float green = 0f;
 
-    HexTile(float xOff, float yOff) {
+    HexTile(float xOff, float yOff, int ref) {
         shapeRenderer = new ShapeRenderer();
         vertices = new float[12];
         tempSetVertices(xOff, yOff);
+        refrence = ref;
+
     }
 
     private void tempSetVertices(float xOff, float yOff){
@@ -33,9 +39,22 @@ public class HexTile extends ApplicationAdapter {
         vertices[11] = 50f + yOff;
     }
 
+    private void setColors(){
+        if(refrence == 1){
+            red = 1;
+        }
+        else if(refrence == 2){
+            blue = 1;
+        }
+        else{
+            green = 1;
+        }
+    }
+
     public void drawHex(){
+        setColors();
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.setColor(1,1,1,1);
+        shapeRenderer.setColor(red,green,blue,1);
         shapeRenderer.polygon(vertices);
         shapeRenderer.end();
     }

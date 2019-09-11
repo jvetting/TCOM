@@ -31,7 +31,7 @@ public class Main extends ApplicationAdapter {
 		g = 0;
 		b = 0;
 		for (i = 0; i < hex.length; i++){
-			hex[i] = new HexTile(xOff[i], yOff[i]);
+			hex[i] = new HexTile(xOff[i], yOff[i],1);
 		}
 	}
 
