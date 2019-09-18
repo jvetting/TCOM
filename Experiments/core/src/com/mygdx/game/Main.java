@@ -20,6 +20,7 @@ public class Main extends ApplicationAdapter {
 	HexTile[][] hexMap;
 	boolean renderInfo = false;
 	boolean renderMainMenu = false;
+	float[][] hexData;
 
 	//Menu menu;
 	
@@ -31,26 +32,32 @@ public class Main extends ApplicationAdapter {
 		xOff = new float[12];
 		yOff = new float[12];
 		setOffsets();
-		hex = new HexTile[12];
+		hex = new HexTile[10];
 		hexMap = new HexTile[4][5];//assuming the grid is 4x5
+		hexData = new float[100][2];
 
 		int i;
 		r = 1;
 		g = 0;
 		b = 0;
+
+
+		for (int j = 0; j < 10; j++){
+			if (j%2 == 0){
+				hexData[j][0] = 300f + 100 * (j%10)/2;
+				hexData[j][1] = 300f + 100 * (j/10);
+			}
+			else {
+				hexData[j][0] = 350f + 100 * (j%10)/2;
+				hexData[j][0] = 250f + 100 * (j/10);
+			}
+		}
+
 		for (i = 0; i < hex.length; i++){//for now, the 1D array will be created before the 2D array
-			hex[i] = new HexTile(xOff[i], yOff[i],i%3, i);
+			hex[i] = new HexTile(hexData[i][0], hexData[i][1],2, i);
 		}
 
 		i = 0;
-		for(int y = 0; y < 4 && i < 12; y++) {//copy the 2D array from the 1D while staying under 12 so to not copy null hexes
-			for(int x = 0; x < 5 && i < 12; x++)
-			{
-				hex[i].order = i;
-				hexMap[y][x] = hex[i];
-				i++;
-			}
-		 }
 	}
 
 	private void setOffsets(){
@@ -184,22 +191,18 @@ public class Main extends ApplicationAdapter {
 	private void displayHexes()
 	{
 		int i = 0;//i keeps track of the order of the hexes, essentially showing the 2D array itself
-		for(int y = 0; y < 4 && i < 12; y++) {//print the values of the 2D array
-			for(int x = 0; x < 5 && i < 12; x++)
-			{
-				hexMap[y][x].drawHex();
-				batch.begin();
-				if(renderInfo) {
-					font.draw(batch, hex[i].character.name, hex[i].centerX, hex[i].centerY);
-					font.draw(batch, hex[i].character.bio, hex[i].centerX, hex[i].centerY - 15);
-					//show that the order of hexes is correct by printing currentHex.order "==" i
-					//font.draw(batch, Integer.toString(hex[i].order), hex[i].centerX, hex[i].centerY - 30);
-					//font.draw(batch, " == ", hex[i].centerX + 15, hex[i].centerY - 30);
-					//font.draw(batch, Integer.toString(i), hex[i].centerX + 40, hex[i].centerY - 30)
-				}
-				batch.end();
-				i++;
+		for (i = 0; i < hex.length; i++) {
+			hex[i].drawHex();
+			batch.begin();
+			if (renderInfo) {
+				//font.draw(batch, hex[i].character.name, hex[i].centerX, hex[i].centerY);
+				//font.draw(batch, hex[i].character.bio, hex[i].centerX, hex[i].centerY - 15);
+				//show that the order of hexes is correct by printing currentHex.order "==" i
+				//font.draw(batch, Integer.toString(hex[i].order), hex[i].centerX, hex[i].centerY - 30);
+				//font.draw(batch, " == ", hex[i].centerX + 15, hex[i].centerY - 30);
+				//font.draw(batch, Integer.toString(i), hex[i].centerX + 40, hex[i].centerY - 30)
 			}
+			batch.end();
 		}
 	}
 
