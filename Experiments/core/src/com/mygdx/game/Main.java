@@ -21,6 +21,8 @@ public class Main extends ApplicationAdapter {
 	boolean renderInfo = false;
 	boolean renderMainMenu = false;
 	float[][] hexData;
+	int numHexs;
+	int rowSize;
 
 	//Menu menu;
 	
@@ -31,30 +33,27 @@ public class Main extends ApplicationAdapter {
 		font = new BitmapFont();
 		xOff = new float[12];
 		yOff = new float[12];
+		numHexs = 210;
+		rowSize = Gdx.graphics.getHeight()/50;
 		setOffsets();
-		hex = new HexTile[100];
+		hex = new HexTile[numHexs];
 		hexMap = new HexTile[4][5];//assuming the grid is 4x5
-		hexData = new float[100][2];
 
 		int i;
 		r = 1;
 		g = 0;
 		b = 0;
 
-
-		for (int j = 0; j < 100; j++){
-			hexData[j][0] = 300f + 150 * (j%10)/2;
-			hexData[j][1] = 300f + 100 * (j/10);
-			if (j%2 != 0){
-				hexData[j][1] -= 50;
+		for (int j = 0; j < hex.length; j++){
+			float tempX;
+			float tempY;
+			tempX = 50f + 75 * (j%rowSize);
+			tempY = 50f + 100 * (j/rowSize);
+			if (j%rowSize%2 != 0){
+				tempY -= 50;
 			}
+			hex[j] = new HexTile(tempX,tempY, 2, j);
 		}
-
-		for (i = 0; i < hex.length; i++){//for now, the 1D array will be created before the 2D array
-			hex[i] = new HexTile(hexData[i][0], hexData[i][1],2, i);
-		}
-
-		i = 0;
 	}
 
 	private void setOffsets(){
@@ -106,7 +105,7 @@ public class Main extends ApplicationAdapter {
 		//r = 1, g = 0, b = 0
 		Gdx.gl.glClearColor(r, g, b, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE) && !renderMainMenu) {
+		/*if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE) && !renderMainMenu) {
 			renderMainMenu = true;
 		}
 		else if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
@@ -133,9 +132,9 @@ public class Main extends ApplicationAdapter {
 			r = 1;
 			g = 0;
 			b = 0;
-		}
+		}*/
 		//batch.begin();
-		//font.draw(batch, "Happy Coding", Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
+		//font.draw(batch, Gdx.graphics.getWidth() + "  " + Gdx.graphics.getHeight(), Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
 		//batch.draw(img, 0, 0);
 		//batch.end();
 

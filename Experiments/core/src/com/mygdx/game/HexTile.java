@@ -21,11 +21,10 @@ public class HexTile extends ApplicationAdapter {
         vertices = new float[12];
         tempSetVertices(xCenter, yCenter);
         reference = ref;
-
-        //player = null;
-        //centerX = xOff+25;
-        //centerY = yOff+50;
+        centerX = xCenter;
+        centerY = yCenter;
         character = new Npc();
+        //player = null;
         order = order;
     }
 
