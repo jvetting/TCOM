@@ -32,7 +32,7 @@ public class Main extends ApplicationAdapter {
 		xOff = new float[12];
 		yOff = new float[12];
 		setOffsets();
-		hex = new HexTile[10];
+		hex = new HexTile[100];
 		hexMap = new HexTile[4][5];//assuming the grid is 4x5
 		hexData = new float[100][2];
 
@@ -42,14 +42,11 @@ public class Main extends ApplicationAdapter {
 		b = 0;
 
 
-		for (int j = 0; j < 10; j++){
-			if (j%2 == 0){
-				hexData[j][0] = 300f + 100 * (j%10)/2;
-				hexData[j][1] = 300f + 100 * (j/10);
-			}
-			else {
-				hexData[j][0] = 350f + 100 * (j%10)/2;
-				hexData[j][0] = 250f + 100 * (j/10);
+		for (int j = 0; j < 100; j++){
+			hexData[j][0] = 300f + 150 * (j%10)/2;
+			hexData[j][1] = 300f + 100 * (j/10);
+			if (j%2 != 0){
+				hexData[j][1] -= 50;
 			}
 		}
 
