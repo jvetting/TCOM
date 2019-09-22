@@ -20,6 +20,9 @@ public class Main extends ApplicationAdapter {
 	HexTile[][] hexMap;
 	boolean renderInfo = false;
 	boolean renderMainMenu = false;
+	float[][] hexData;
+	int numHexs;
+	int rowSize;
 
 	//Menu menu;
 	
@@ -30,27 +33,27 @@ public class Main extends ApplicationAdapter {
 		font = new BitmapFont();
 		xOff = new float[12];
 		yOff = new float[12];
+		numHexs = 210;
+		rowSize = Gdx.graphics.getHeight()/50;
 		setOffsets();
-		hex = new HexTile[12];
+		hex = new HexTile[numHexs];
 		hexMap = new HexTile[4][5];//assuming the grid is 4x5
 
 		int i;
 		r = 1;
 		g = 0;
 		b = 0;
-		for (i = 0; i < hex.length; i++){//for now, the 1D array will be created before the 2D array
-			hex[i] = new HexTile(xOff[i], yOff[i],i%3, i);
-		}
 
-		i = 0;
-		for(int y = 0; y < 4 && i < 12; y++) {//copy the 2D array from the 1D while staying under 12 so to not copy null hexes
-			for(int x = 0; x < 5 && i < 12; x++)
-			{
-				hex[i].order = i;
-				hexMap[y][x] = hex[i];
-				i++;
+		for (int j = 0; j < hex.length; j++){
+			float tempX;
+			float tempY;
+			tempX = 50f + 75 * (j%rowSize);
+			tempY = 50f + 100 * (j/rowSize);
+			if (j%rowSize%2 != 0){
+				tempY -= 50;
 			}
-		 }
+			hex[j] = new HexTile(tempX,tempY, 2, j);
+		}
 	}
 
 	private void setOffsets(){
@@ -102,7 +105,7 @@ public class Main extends ApplicationAdapter {
 		//r = 1, g = 0, b = 0
 		Gdx.gl.glClearColor(r, g, b, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE) && !renderMainMenu) {
+		/*if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE) && !renderMainMenu) {
 			renderMainMenu = true;
 		}
 		else if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
@@ -129,9 +132,9 @@ public class Main extends ApplicationAdapter {
 			r = 1;
 			g = 0;
 			b = 0;
-		}
+		}*/
 		//batch.begin();
-		//font.draw(batch, "Happy Coding", Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
+		//font.draw(batch, Gdx.graphics.getWidth() + "  " + Gdx.graphics.getHeight(), Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
 		//batch.draw(img, 0, 0);
 		//batch.end();
 
@@ -184,22 +187,18 @@ public class Main extends ApplicationAdapter {
 	private void displayHexes()
 	{
 		int i = 0;//i keeps track of the order of the hexes, essentially showing the 2D array itself
-		for(int y = 0; y < 4 && i < 12; y++) {//print the values of the 2D array
-			for(int x = 0; x < 5 && i < 12; x++)
-			{
-				hexMap[y][x].drawHex();
-				batch.begin();
-				if(renderInfo) {
-					font.draw(batch, hex[i].character.name, hex[i].centerX, hex[i].centerY);
-					font.draw(batch, hex[i].character.bio, hex[i].centerX, hex[i].centerY - 15);
-					//show that the order of hexes is correct by printing currentHex.order "==" i
-					//font.draw(batch, Integer.toString(hex[i].order), hex[i].centerX, hex[i].centerY - 30);
-					//font.draw(batch, " == ", hex[i].centerX + 15, hex[i].centerY - 30);
-					//font.draw(batch, Integer.toString(i), hex[i].centerX + 40, hex[i].centerY - 30)
-				}
-				batch.end();
-				i++;
+		for (i = 0; i < hex.length; i++) {
+			hex[i].drawHex();
+			batch.begin();
+			if (renderInfo) {
+				//font.draw(batch, hex[i].character.name, hex[i].centerX, hex[i].centerY);
+				//font.draw(batch, hex[i].character.bio, hex[i].centerX, hex[i].centerY - 15);
+				//show that the order of hexes is correct by printing currentHex.order "==" i
+				//font.draw(batch, Integer.toString(hex[i].order), hex[i].centerX, hex[i].centerY - 30);
+				//font.draw(batch, " == ", hex[i].centerX + 15, hex[i].centerY - 30);
+				//font.draw(batch, Integer.toString(i), hex[i].centerX + 40, hex[i].centerY - 30)
 			}
+			batch.end();
 		}
 	}
 
