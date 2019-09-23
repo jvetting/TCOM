@@ -47,7 +47,6 @@ public class Tiles {
     @Override
     public String toString() {
         return new ToStringCreator(this)
-
                 .append("id", this.getId())
                 .append("new", this.isNew())
                 .append("name", this.getName()).toString();
