@@ -21,8 +21,8 @@ public class Main extends ApplicationAdapter {
 	boolean renderInfo = false;
 	boolean renderMainMenu = false;
 	float[][] hexData;
-	int numHexs;
-	int rowSize;
+	int numCol;
+	int colSize;
 
 	//Menu menu;
 	
@@ -31,74 +31,42 @@ public class Main extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
 		font = new BitmapFont();
-		xOff = new float[12];
-		yOff = new float[12];
-		numHexs = 210;
-		rowSize = Gdx.graphics.getHeight()/50;
-		setOffsets();
-		hex = new HexTile[numHexs];
-		hexMap = new HexTile[4][5];//assuming the grid is 4x5
+		numCol = 19;
+		colSize = 1;
+		hex = new HexTile[200];
 
-		int i;
 		r = 1;
 		g = 0;
 		b = 0;
 
+		int currentCol = 0;
+		int colDist = 0;
+		float colOffset = 525f;
 		for (int j = 0; j < hex.length; j++){
 			float tempX;
 			float tempY;
-			tempX = 50f + 75 * (j%rowSize);
-			tempY = 50f + 100 * (j/rowSize);
-			if (j%rowSize%2 != 0){
-				tempY -= 50;
-			}
+			tempX = 150f + 75 * (currentCol);
+			tempY = colOffset + 100 * (colDist);
 			hex[j] = new HexTile(tempX,tempY, 2, j);
-		}
-	}
 
-	private void setOffsets(){
-		xOff[0] = 0f;
-		yOff[0] = 0f;
-		xOff[1] = 100f;
-		yOff[1] = 0f;
-		xOff[2] = 200f;
-		yOff[2] = 0f;
-		xOff[3] = 300f;
-		yOff[3] = 0f;
-		xOff[4] = 400f;
-		yOff[4] = 0f;
-		xOff[5] = 0f;
-		yOff[5] = 100f;
-		xOff[6] = 100f;
-		yOff[6] = 100f;
-		xOff[7] = 200f;
-		yOff[7] = 100f;
-		xOff[8] = 300f;
-		yOff[8] = 100f;
-		xOff[9] = 400f;
-		yOff[9] = 100f;
-		xOff[10] = 0f;
-		yOff[10] = 200f;
-		xOff[11] = 100f;
-		yOff[11] = 200f;
-	}
-
-	public void genTiles()//to be used to create 2D array independent of 1D array. also gives each hex a random color
-	{
-		Random rand = new Random();
-		int i = 0;
-		int color = 0;
-		for(int y = 0; y < 4 && i < 12; y++)
-		{
-			for(int x = 0; x < 5 && i < 12; x++)
-			{
-				color = rand.nextInt(3);//color will be red, blue or green
-				hexMap[y][x] = new HexTile(xOff[i], yOff[i], color, i);
-				i++;
+			colDist++;
+			if (colDist >= colSize){
+				currentCol++;
+				if (currentCol >= numCol){
+					break;
+				}
+				if (currentCol > numCol/2){
+					colSize-=1;
+					colOffset += 50;
+				}
+				else {
+					colSize+=1;
+					colOffset -= 50;
+				}
+				colDist = 0;
 			}
 		}
 	}
-
 
 	@Override
 	public void render () {
@@ -186,8 +154,11 @@ public class Main extends ApplicationAdapter {
 
 	private void displayHexes()
 	{
-		int i = 0;//i keeps track of the order of the hexes, essentially showing the 2D array itself
+		int i;//i keeps track of the order of the hexes, essentially showing the 2D array itself
 		for (i = 0; i < hex.length; i++) {
+			if (hex[i] == null){
+				continue;
+			}
 			hex[i].drawHex();
 			batch.begin();
 			if (renderInfo) {
