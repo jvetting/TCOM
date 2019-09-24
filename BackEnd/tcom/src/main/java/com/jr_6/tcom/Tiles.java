@@ -20,6 +20,9 @@ public class Tiles {
     @NotFound(action = NotFoundAction.IGNORE)
     private Integer id;
 
+	//
+	
+	//
 	@Column(name = "name")
     @NotFound(action = NotFoundAction.IGNORE)
     private String name;
