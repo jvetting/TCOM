@@ -1,3 +1,3 @@
-INSERT IGNORE INTO tiles VALUES (1, 'Obamas Last Name');
-INSERT IGNORE INTO tiles VALUES (2, 'Ben Shapiro');
-INSERT IGNORE INTO tiles VALUES (69, 'Andrew Anubis');
+INSERT IGNORE INTO tiles VALUES (1, 12, 21);
+INSERT IGNORE INTO tiles VALUES (2, 2, 1);
+INSERT IGNORE INTO tiles VALUES (3, 1, 2);

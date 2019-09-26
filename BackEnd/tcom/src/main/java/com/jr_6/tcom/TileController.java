@@ -14,42 +14,64 @@ import java.util.Optional;
 
 @RestController
 public class TileController {
+	
     @Autowired
     TileRepository tilesRepository;
 
     private final Logger logger = LoggerFactory.getLogger(TileController.class);
-
+    
+    
     @RequestMapping(method = RequestMethod.POST, path = "/tiles/new")
     public String saveTile(Tiles tile) {
         tilesRepository.save(tile);
+        return "New Tile "+ tile.getId() + "at (" + tile.getCenterX() +"," + tile.getCenterY() +") Saved";//tile.getName() + " Saved";
+    }
+	
+    
+    /**
+    @RequestMapping(method = RequestMethod.POST, path = "/tiles/new/{tileName}")
+    public String saveTile(@PathVariable("tileName") String name) {
+    	Tiles tile;
+        tilesRepository.save(tile);
         return "New Tile "+ tile.getName() + " Saved";
     }
-
+    
+    @RequestMapping(method = RequestMethod.POST, path = "/tiles/new/{tileCenter}")
+    public String saveTile(@PathVariable("tileCenter") int[] center) {
+    	Tiles tile;
+    	tile.setCenterX(center[0]);
+    	tile.setCenterY(center[1]);
+        tilesRepository.save(tile);
+        return "New Tile at ("+ tile.getCenterX() + "," + tile.getCenterY() +") Saved";
+    }
+    **/
+    
     @RequestMapping(method = RequestMethod.GET, path = "/tiles")
     public List<Tiles> getAllTiles() {
-        logger.info("Entered into Controller Layer");
+        logger.info("Entered Into Controller Layer");
         List<Tiles> results = tilesRepository.findAll();
         logger.info("Number of Records Fetched:" + results.size());
         return results;
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/tiles/{tileId}")
-    public Optional<Tiles> findTileById(@PathVariable("tileId") Integer id) {
-        logger.info("Entered into Controller Layer");
+    public Optional<Tiles> findTileById(@PathVariable("tileId") int id) {
+        logger.info("Entered Into Controller Layer");
         Optional<Tiles> results = tilesRepository.findById(id);
         return results;
     }
     
     
     @PutMapping("/tiles/{id}")
-    public String updateTile(@RequestBody Tiles t, @PathVariable Integer id) {
+    public String updateTile(@RequestBody Tiles t, @PathVariable int id) {
     	Optional<Tiles> old = tilesRepository.findById(id);
-    	old.setName(t.getName());
-    	return "Put tile " + t.getName() + " at " + id;
+    	old.get().setCenterX(t.getCenterX());
+    	old.get().setCenterY(t.getCenterX());
+    	return "Put tile " + id + " at (" + old.get().getCenterX() + "," + old.get().getCenterY() +")";
     }
     
     @DeleteMapping("/tiles/{id}")
-    public String deleteTile(@PathVariable Integer id) {
+    public String deleteTile(@PathVariable int id) {
     	tilesRepository.deleteById(id);
     	return "deleted " + id;
     }
