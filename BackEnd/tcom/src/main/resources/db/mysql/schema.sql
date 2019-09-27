@@ -1,5 +1,6 @@
 CREATE TABLE IF NOT EXISTS tiles (
   id INT(4) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(30),
-  INDEX(name)
+  centerX INT(4),
+  centerY INT(4),
+  INDEX(id)
 ) engine=InnoDB;

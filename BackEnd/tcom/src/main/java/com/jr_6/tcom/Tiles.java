@@ -17,12 +17,24 @@ public class Tiles {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    @NotFound(action = NotFoundAction.IGNORE)
+    //@NotFound(action = NotFoundAction.IGNORE)
     private Integer id;
 
+	//store center values and bool npc
+	/**
 	@Column(name = "name")
     @NotFound(action = NotFoundAction.IGNORE)
     private String name;
+	**/
+	
+
+	@Column(name = "centerX")
+    //@NotFound(action = NotFoundAction.IGNORE)
+    private int centerX;
+
+	@Column(name = "centerY")
+    //@NotFound(action = NotFoundAction.IGNORE)
+    private int centerY;
 	
     public Integer getId() {
         return id;
@@ -35,7 +47,7 @@ public class Tiles {
     public boolean isNew() {
         return this.id == null;
     }
-
+    /**
     public String getName() {
         return this.name;
     }
@@ -43,12 +55,26 @@ public class Tiles {
     public void setName(String name) {
         this.name = name;
     }
+    **/
     
+    public int getCenterX() {
+        return this.centerX;
+    }
+    public void setCenterX(int centerX) {
+        this.centerX = centerX;
+    }
+    public int getCenterY() {
+        return this.centerY;
+    }
+    public void setCenterY(int centerY) {
+        this.centerY = centerY;
+    }
     @Override
     public String toString() {
         return new ToStringCreator(this)
                 .append("id", this.getId())
                 .append("new", this.isNew())
-                .append("name", this.getName()).toString();
+                .append("x", this.centerX)
+                .append("y", this.centerY).toString();
     }
 }
