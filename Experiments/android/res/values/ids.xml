@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="btnStringRequest" type="id"/>
+    <item name="btnImageReq" type="id"/>
+    <item name="imgNetwork" type="id"/>
+    <item name="imgView" type="id"/>
+    <item name="btnJsonObj" type="id"/>
+    <item name="btnJsonArray" type="id"/>
+    <item name="msgResponse" type="id"/>
+    <item name="btnStringReq" type="id"/>
+    <item name="btnJsonRequest" type="id"/>
+    <item name="btnImageRequest" type="id"/>
+</resources>
