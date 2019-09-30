@@ -1,5 +1,7 @@
 package com.mygdx.game;
 
+
+import android.os.Looper;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -17,6 +19,8 @@ public class Main extends ApplicationAdapter {
 	float[] yOff;
 	HexTile[] hex;
 	int r,g,b;
+	ServerRequests req;
+	//String respond;
 
 	boolean renderInfo = false;
 	boolean renderMainMenu = false;
@@ -28,9 +32,11 @@ public class Main extends ApplicationAdapter {
 	
 	@Override
 	public void create () {
+		Looper.prepare();
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
 		font = new BitmapFont();
+		req = new ServerRequests();
 		numCol = 19;
 		colSize = 1;
 		int temp = 0;
@@ -75,7 +81,8 @@ public class Main extends ApplicationAdapter {
 			}
 		}
 		hex[50].addNpc();
-		//Call server
+		//respond = new String();
+		req.makeJsonObjReq();
 	}
 
 	@Override
@@ -112,7 +119,7 @@ public class Main extends ApplicationAdapter {
 			b = 0;
 		}*/
 		//batch.begin();
-		//font.draw(batch, Gdx.graphics.getWidth() + "  " + Gdx.graphics.getHeight(), Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
+		//font.draw(batch, respond, Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
 		//batch.draw(img, 0, 0);
 		//batch.end();
 

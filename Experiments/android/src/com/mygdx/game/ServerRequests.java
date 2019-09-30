@@ -28,6 +28,7 @@ public class ServerRequests extends Activity{
 
 
     public void makeJsonObjReq() {
+
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Method.GET,
                 Const.URL_SERVER, null,
                 new Response.Listener<JSONObject>() {
@@ -43,7 +44,9 @@ public class ServerRequests extends Activity{
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
             }
-        }) {
+
+        })
+        {
 
             /**
              * Passing some request headers
