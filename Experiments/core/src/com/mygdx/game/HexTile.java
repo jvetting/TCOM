@@ -1,18 +1,16 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public class HexTile extends ApplicationAdapter {
     ShapeRenderer shapeRenderer;
-    ShapeRenderer playerIcon;
     private float[] vertices;
     private int reference;
     float red = 0f;
     float blue = 0f;
     float green = 0f;
-    Npc player;
+    //Pc player;
     float centerX;
     float centerY;
     Character character;
@@ -25,14 +23,9 @@ public class HexTile extends ApplicationAdapter {
         reference = ref;
         centerX = xCenter;
         centerY = yCenter;
-        //character = new Npc();
-        player = null;
+        character = new Npc();
+        //player = null;
         order = order;
-    }
-
-    public void addNpc(){
-        player = new Npc();
-        playerIcon = new ShapeRenderer();
     }
 
     private void tempSetVertices(float xCenter, float yCenter){
@@ -73,16 +66,6 @@ public class HexTile extends ApplicationAdapter {
         shapeRenderer.setColor(red,green,blue,1);
         shapeRenderer.polygon(vertices);
         shapeRenderer.end();
-        if (player != null) {
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-            shapeRenderer.setColor(green, blue, red, 1);
-            shapeRenderer.circle(centerX, centerY, 15f);
-            shapeRenderer.end();
-        }
-        /*playerIcon.begin(ShapeRenderer.ShapeType.Filled);
-        playerIcon.setColor(green, red, blue, 1);
-        playerIcon.circle(centerX, centerY, 15f);
-        playerIcon.end();*/
     }
 
     @Override
