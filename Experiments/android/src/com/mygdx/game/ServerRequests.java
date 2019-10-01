@@ -4,13 +4,12 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
-import com.android.volley.Request.Method;
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.mygdx.game.app.AppController;
-import com.mygdx.game.net_utils.Const;
 import org.json.JSONObject;
 public class ServerRequests extends Activity{
 
@@ -29,8 +28,8 @@ public class ServerRequests extends Activity{
 
     public void makeJsonObjReq() {
 
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Method.GET,
-                Const.URL_SERVER, null,
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
+                "http://coms-309-jr-6.misc.iastate.edu:8080/tiles", null,
                 new Response.Listener<JSONObject>() {
 
                     @Override
@@ -43,6 +42,7 @@ public class ServerRequests extends Activity{
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
+                error.printStackTrace();
             }
 
         })
