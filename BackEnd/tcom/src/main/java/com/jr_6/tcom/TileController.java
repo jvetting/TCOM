@@ -24,7 +24,7 @@ public class TileController {
     @RequestMapping(method = RequestMethod.POST, path = "/tiles/new")
     public String saveTile(Tiles tile) {
         tilesRepository.save(tile);
-        return "New Tile "+ tile.getId() + "at (" + tile.getCenterX() +"," + tile.getCenterY() +") Saved";//tile.getName() + " Saved";
+        return "New Tile "+ tile.getId() + "at (" + tile.getCenterX() +"," + tile.getCenterY() +") Saved" + " hasPlayer = "+ tile.getHasPlayer();//tile.getName() + " Saved";
     }
 	
     
@@ -66,8 +66,9 @@ public class TileController {
     public String updateTile(@RequestBody Tiles t, @PathVariable int id) {
     	Optional<Tiles> old = tilesRepository.findById(id);
     	old.get().setCenterX(t.getCenterX());
-    	old.get().setCenterY(t.getCenterX());
-    	return "Put tile " + id + " at (" + old.get().getCenterX() + "," + old.get().getCenterY() +")";
+    	old.get().setCenterY(t.getCenterY());
+    	old.get().setHasPlayer(t.getHasPlayer());
+    	return "Put tile " + id + " at (" + old.get().getCenterX() + "," + old.get().getCenterY() +")" + "tile has player =" + old.get().getHasPlayer();
     }
     
     @DeleteMapping("/tiles/{id}")
