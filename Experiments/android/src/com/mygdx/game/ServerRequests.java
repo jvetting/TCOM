@@ -33,19 +33,69 @@ public class ServerRequests extends Activity{
 
     }
 
-    public void putJsonResponse(HexTile hex){
-        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST,
-                "http://coms-309-jr-6.misc.iastate.edu:8080/tiles/new", null,
+
+
+    public void putJsonResponse(final HexTile hex) {
+        JSONObject parms = null;
+        parms = new JSONObject();
+        try {
+            parms.put("id", hex.order);
+            parms.put("centerX", hex.centerX);
+            parms.put("centerY", hex.centerY);
+            parms.put("hasPlayer", hex.hasPlayer());
+            parms.put("new", false);
+        }
+        catch(JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.PUT,
+                "http://coms-309-jr-6.misc.iastate.edu:8080/tiles/" + hex.order, parms,
                 new Response.Listener<JSONObject>(){
 
                     public void onResponse(JSONObject response){
-                        log.d(TAG, response.toString());
+                        Log.d(TAG, response.toString());
 
-                        try{
+                        /*try{
                             response.put("id", hex.order);
                             response.put("centerX", hex.getCenterX());
                             response.put("centerY", hex.getCenterY());
                             response.put("hasPlayer", hex.hasPlayer());
+                            response.put("new", false);
+                        }
+                        catch (JSONException e){
+                            e.printStackTrace();
+                            Toast.makeText(getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                        }*/
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d(TAG, "Error: " + error.getMessage());
+                error.printStackTrace();
+            }
+
+        });
+        {
+            AppController.getInstance().addToRequestQueue(req, tag_req_obj);
+        }
+    }
+
+    public void setJsonResponse(final HexTile hex){
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST,
+                "http://coms-309-jr-6.misc.iastate.edu:8080/tiles/" + hex.order, null,
+                new Response.Listener<JSONObject>(){
+
+                    public void onResponse(JSONObject response){
+                        Log.d(TAG, response.toString());
+
+                        try{
+                            response.put("centerX", hex.getCenterX());
+                            response.put("centerY", hex.getCenterY());
+                            response.put("hasPlayer", hex.hasPlayer());
+                            response.put("new", false);
                         }
                         catch (JSONException e){
                             e.printStackTrace();
@@ -59,42 +109,15 @@ public class ServerRequests extends Activity{
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
                 error.printStackTrace();
             }
-
-        })
-    }
-
-    public void setJsonResponse(HexTile hex){
-        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST,
-                "http://coms-309-jr-6.misc.iastate.edu:8080/tiles/new/" + hex.order, null,
-                new Response.Listener<JSONObject>(){
-
-                    public void onResponse(JSONObject response){
-                        log.d(TAG, response.toString());
-
-                        try{
-                            response.setInt("centerX", hex.getCenterX());
-                            response.setInt("centerY", hex.getCenterY());
-                            response.setBoolen("hasPlayer", hex.hasPlayer());
-                        }
-                        catch (JSONException e){
-                            e.printStackTrace();
-                            Toast.makeText(getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-
-        @Override
-        public void onErrorResponse(VolleyError error) {
-            VolleyLog.d(TAG, "Error: " + error.getMessage());
-            error.printStackTrace();
+        });
+        {
+            AppController.getInstance().addToRequestQueue(req, tag_req_obj);
         }
-
-    })
     }
 
-    public void makeJsonObjReq() {
+    public void makeJsonObjReq(final int id) {
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
-                "http://coms-309-jr-6.misc.iastate.edu:8080/tiles/2", null,
+                "http://coms-309-jr-6.misc.iastate.edu:8080/tiles/" + id, null,
                 new Response.Listener<JSONObject>() {
 
                     @Override
@@ -122,16 +145,11 @@ public class ServerRequests extends Activity{
                             else if (!hasPlayer){
                                 Main.hex[id].character = null;
                             }
-                            //msgResponse.setText(jsonResponse);
-
                         }
                         catch (JSONException e){
                             e.printStackTrace();
                             Toast.makeText(getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
                         }
-
-                        //msgResponse.setText(response.toString());
-                        //callback.onSuccess(response);
                     }
                 }, new Response.ErrorListener() {
 

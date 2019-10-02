@@ -56,14 +56,15 @@ public class Main extends ApplicationAdapter {
 
 		int currentCol = 0;
 		int colDist = 0;
-		float colOffset = 525f;
+		int colOffset = 525;
 		for (int j = 0; j < hex.length; j++){
-			float tempX;
-			float tempY;
-			tempX = 150f + 75 * (currentCol);
+			int tempX;
+			int tempY;
+			tempX = 150 + 75 * (currentCol);
 			tempY = colOffset + 100 * (colDist);
 			hex[j] = new HexTile(tempX,tempY, 2, j);
-			req.putJSONResponse(hex[j]);
+			req.putJsonResponse(hex[j]);
+			req.makeJsonObjReq(j);
 			colDist++;
 			if (colDist >= colSize) {
 				currentCol++;
@@ -81,8 +82,6 @@ public class Main extends ApplicationAdapter {
 			}
 		}
 		hex[50].addNpc();
-		//respond = new String();
-		req.makeJsonObjReq();
 	}
 
 	@Override
