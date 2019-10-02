@@ -20,6 +20,7 @@ public class Main extends ApplicationAdapter {
 	HexTile[] hex;
 	int r,g,b;
 	ServerRequests req;
+	VolleyCallback call;
 	//String respond;
 
 	boolean renderInfo = false;
@@ -82,7 +83,7 @@ public class Main extends ApplicationAdapter {
 		}
 		hex[50].addNpc();
 		//respond = new String();
-		req.makeJsonObjReq();
+		req.makeJsonObjReq(call);
 	}
 
 	@Override

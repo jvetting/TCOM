@@ -16,6 +16,7 @@ public class HexTile extends ApplicationAdapter {
     Character character;
     int order;
 
+
     HexTile(float xCenter, float yCenter, int ref, int order) {//
         shapeRenderer = new ShapeRenderer();
         vertices = new float[12];
@@ -24,9 +25,11 @@ public class HexTile extends ApplicationAdapter {
         centerX = xCenter;
         centerY = yCenter;
         character = new Npc();
+        //req = new ServerRequests();
         //player = null;
         order = order;
     }
+
 
     private void tempSetVertices(float xCenter, float yCenter){
         vertices[0] = xCenter - 50f;
@@ -58,6 +61,10 @@ public class HexTile extends ApplicationAdapter {
         else{
             green = 1;
         }
+    }
+
+    public void addNpc(){
+        character = new Npc();
     }
 
     public void drawHex(){
