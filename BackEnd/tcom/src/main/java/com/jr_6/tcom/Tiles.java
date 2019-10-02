@@ -27,7 +27,6 @@ public class Tiles {
     private String name;
 	**/
 	
-
 	@Column(name = "centerX")
     //@NotFound(action = NotFoundAction.IGNORE)
     private int centerX;
@@ -35,6 +34,10 @@ public class Tiles {
 	@Column(name = "centerY")
     //@NotFound(action = NotFoundAction.IGNORE)
     private int centerY;
+
+	@Column(name = "hasPlayer")
+    //@NotFound(action = NotFoundAction.IGNORE)
+    private boolean hasPlayer;
 	
     public Integer getId() {
         return id;
@@ -56,7 +59,12 @@ public class Tiles {
         this.name = name;
     }
     **/
-    
+    public boolean getHasPlayer() {
+    	return this.hasPlayer;
+    }
+    public void setHasPlayer(boolean hasPlayer) {
+    	this.hasPlayer = hasPlayer;
+    }
     public int getCenterX() {
         return this.centerX;
     }
@@ -75,6 +83,7 @@ public class Tiles {
                 .append("id", this.getId())
                 .append("new", this.isNew())
                 .append("x", this.centerX)
-                .append("y", this.centerY).toString();
+                .append("y", this.centerY)
+                .append("hasPlayer", this.hasPlayer).toString();
     }
 }
