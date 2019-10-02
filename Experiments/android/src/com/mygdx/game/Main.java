@@ -12,15 +12,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import java.util.Random;
 
 public class Main extends ApplicationAdapter {
+
 	SpriteBatch batch;
 	Texture img;
 	BitmapFont font;
-	float[] xOff;
-	float[] yOff;
-	HexTile[] hex;
+	public static HexTile[] hex;
 	int r,g,b;
 	ServerRequests req;
-	VolleyCallback call;
+	//VolleyCallback call;
 	//String respond;
 
 	boolean renderInfo = false;
@@ -83,7 +82,7 @@ public class Main extends ApplicationAdapter {
 		}
 		hex[50].addNpc();
 		//respond = new String();
-		req.makeJsonObjReq(call);
+		req.makeJsonObjReq();
 	}
 
 	@Override
@@ -201,8 +200,6 @@ public class Main extends ApplicationAdapter {
 		for (int i = 0; i < hex.length; i++){
 			hex[i].dispose();
 		}
-		xOff = null;
-		yOff = null;
 
 		/**
 		for (int y = 0; y < 12; y++)

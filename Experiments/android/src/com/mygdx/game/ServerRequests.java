@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -22,6 +23,7 @@ public class ServerRequests extends Activity{
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -34,7 +36,7 @@ public class ServerRequests extends Activity{
 
     public void makeJsonObjReq() {
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
-                "http://coms-309-jr-6.misc.iastate.edu:8080/tiles/1", null,
+                "http://coms-309-jr-6.misc.iastate.edu:8080/tiles/2", null,
                 new Response.Listener<JSONObject>() {
 
                     @Override
@@ -42,22 +44,32 @@ public class ServerRequests extends Activity{
                         Log.d(TAG, response.toString());
 
                         try {
-                            int id = response.getInt("id");
+                            Integer id = (Integer) response.get("id");
                             int centerX = response.getInt("centerX");
                             int centerY = response.getInt("centerY");
                             boolean hasPlayer = response.getBoolean("hasPlayer");
 
                             jsonResponse = "";
-                            jsonResponse = "id: " + id + "\n\n";
-                            jsonResponse = "centerX " + centerX + "\n\n";
-                            jsonResponse = "centerY " + centerY + "\n\n";
-                            jsonResponse = "hasPlayer " + hasPlayer + "\n\n";
-
-                            msgResponse.setText(jsonResponse);
+                            jsonResponse += "id: " + id + "\n\n";
+                            jsonResponse += "centerX: " + centerX + "\n\n";
+                            jsonResponse += "centerY: " + centerY + "\n\n";
+                            jsonResponse += "hasPlayer: " + hasPlayer + "\n\n";
+                            Log.d(TAG, jsonResponse);
+                            Main.hex[id].centerX = centerX;
+                            Main.hex[id].centerY = centerY;
+                            Main.hex[id].reference = 3;
+                            if (Main.hex[id].character == null && hasPlayer){
+                                Main.hex[id].character = new Npc();
+                            }
+                            else if (!hasPlayer){
+                                Main.hex[id].character = null;
+                            }
+                            //msgResponse.setText(jsonResponse);
 
                         }
                         catch (JSONException e){
-
+                            e.printStackTrace();
+                            Toast.makeText(getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
                         }
 
                         //msgResponse.setText(response.toString());

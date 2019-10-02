@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 public class HexTile extends ApplicationAdapter {
     ShapeRenderer shapeRenderer;
     private float[] vertices;
-    private int reference;
+    int reference;
     float red = 0f;
     float blue = 0f;
     float green = 0f;
@@ -20,7 +20,6 @@ public class HexTile extends ApplicationAdapter {
     HexTile(float xCenter, float yCenter, int ref, int order) {//
         shapeRenderer = new ShapeRenderer();
         vertices = new float[12];
-        tempSetVertices(xCenter, yCenter);
         reference = ref;
         centerX = xCenter;
         centerY = yCenter;
@@ -71,8 +70,15 @@ public class HexTile extends ApplicationAdapter {
         setColors();
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.setColor(red,green,blue,1);
+        tempSetVertices(centerX, centerY);
         shapeRenderer.polygon(vertices);
         shapeRenderer.end();
+        if (character != null){
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+            shapeRenderer.setColor(blue, green, red, 1);
+            shapeRenderer.circle(centerX, centerY, 10);
+            shapeRenderer.end();
+        }
     }
 
     @Override
