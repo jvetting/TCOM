@@ -33,6 +33,64 @@ public class ServerRequests extends Activity{
 
     }
 
+    public void putJsonResponse(HexTile hex){
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST,
+                "http://coms-309-jr-6.misc.iastate.edu:8080/tiles/new", null,
+                new Response.Listener<JSONObject>(){
+
+                    public void onResponse(JSONObject response){
+                        log.d(TAG, response.toString());
+
+                        try{
+                            response.put("id", hex.order);
+                            response.put("centerX", hex.getCenterX());
+                            response.put("centerY", hex.getCenterY());
+                            response.put("hasPlayer", hex.hasPlayer());
+                        }
+                        catch (JSONException e){
+                            e.printStackTrace();
+                            Toast.makeText(getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d(TAG, "Error: " + error.getMessage());
+                error.printStackTrace();
+            }
+
+        })
+    }
+
+    public void setJsonResponse(HexTile hex){
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST,
+                "http://coms-309-jr-6.misc.iastate.edu:8080/tiles/new/" + hex.order, null,
+                new Response.Listener<JSONObject>(){
+
+                    public void onResponse(JSONObject response){
+                        log.d(TAG, response.toString());
+
+                        try{
+                            response.setInt("centerX", hex.getCenterX());
+                            response.setInt("centerY", hex.getCenterY());
+                            response.setBoolen("hasPlayer", hex.hasPlayer());
+                        }
+                        catch (JSONException e){
+                            e.printStackTrace();
+                            Toast.makeText(getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            VolleyLog.d(TAG, "Error: " + error.getMessage());
+            error.printStackTrace();
+        }
+
+    })
+    }
 
     public void makeJsonObjReq() {
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,

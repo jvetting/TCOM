@@ -63,7 +63,7 @@ public class Main extends ApplicationAdapter {
 			tempX = 150f + 75 * (currentCol);
 			tempY = colOffset + 100 * (colDist);
 			hex[j] = new HexTile(tempX,tempY, 2, j);
-
+			req.putJSONResponse(hex[j]);
 			colDist++;
 			if (colDist >= colSize) {
 				currentCol++;

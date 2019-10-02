@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import Character.java;
 
 public class HexTile extends ApplicationAdapter {
     ShapeRenderer shapeRenderer;
@@ -87,5 +88,47 @@ public class HexTile extends ApplicationAdapter {
         vertices = null;
     }
 
+    public float getCenterX() {
+        return centerX;
+    }
 
+    public float getCenterY() {
+        return centerY;
+    }
+
+    public Character getCharacter() {
+        return character;
+    }
+
+    public float getBlue() {
+        return blue;
+    }
+
+    public float getGreen() {
+        return green;
+    }
+
+    public float getRed() {
+        return red;
+    }
+
+    public float[] getVertices() {
+        return vertices;
+    }
+
+    public void setCenterX(float centerX) {
+        this.centerX = centerX;
+    }
+
+    public void setCenterY(float centerY) {
+        this.centerY = centerY;
+    }
+
+    public void setCharacter(Character character) {
+        this.character = character;
+    }
+
+    public boolean hasPlayer(){
+        return !(character == null);
+    }
 }
