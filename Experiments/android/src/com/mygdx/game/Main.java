@@ -1,13 +1,15 @@
 package com.mygdx.game;
 
+
+import android.os.Looper;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import java.util.Random;//
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+import java.util.Random;
 
 public class Main extends ApplicationAdapter {
 	SpriteBatch batch;
@@ -17,10 +19,12 @@ public class Main extends ApplicationAdapter {
 	float[] yOff;
 	HexTile[] hex;
 	int r,g,b;
-	HexTile[][] hexMap;
+	ServerRequests req;
+	//String respond;
+
 	boolean renderInfo = false;
 	boolean renderMainMenu = false;
-	float[][] hexData;
+
 	int numCol;
 	int colSize;
 
@@ -28,13 +32,24 @@ public class Main extends ApplicationAdapter {
 	
 	@Override
 	public void create () {
+		Looper.prepare();
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
 		font = new BitmapFont();
+		req = new ServerRequests();
 		numCol = 19;
 		colSize = 1;
-		hex = new HexTile[200];
-
+		int temp = 0;
+		int t;
+		for (t = 0; t <= numCol/2; t++){
+			temp += (colSize+t)*2;
+		}
+		if (numCol%2 != 0){
+			temp += colSize+t;
+		}
+		System.out.print(temp);
+		hex = new HexTile[temp];
+		Random rand = new Random();
 		r = 1;
 		g = 0;
 		b = 0;
@@ -50,22 +65,24 @@ public class Main extends ApplicationAdapter {
 			hex[j] = new HexTile(tempX,tempY, 2, j);
 
 			colDist++;
-			if (colDist >= colSize){
+			if (colDist >= colSize) {
 				currentCol++;
-				if (currentCol >= numCol){
+				if (currentCol >= numCol) {
 					break;
 				}
-				if (currentCol > numCol/2){
-					colSize-=1;
+				if (currentCol > numCol / 2) {
+					colSize -= 1;
 					colOffset += 50;
-				}
-				else {
-					colSize+=1;
+				} else {
+					colSize += 1;
 					colOffset -= 50;
 				}
 				colDist = 0;
 			}
 		}
+		hex[50].addNpc();
+		//respond = new String();
+		req.makeJsonObjReq();
 	}
 
 	@Override
@@ -102,7 +119,7 @@ public class Main extends ApplicationAdapter {
 			b = 0;
 		}*/
 		//batch.begin();
-		//font.draw(batch, Gdx.graphics.getWidth() + "  " + Gdx.graphics.getHeight(), Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
+		//font.draw(batch, respond, Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
 		//batch.draw(img, 0, 0);
 		//batch.end();
 
