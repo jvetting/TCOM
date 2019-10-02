@@ -10,12 +10,17 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.mygdx.game.app.AppController;
+import org.json.JSONException;
 import org.json.JSONObject;
+
 public class ServerRequests extends Activity{
 
     private String TAG = ServerRequests.class.getSimpleName();
     private TextView msgResponse;
     private String tag_req_obj = "jobr_req";
+    private String jsonResponse;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -23,19 +28,40 @@ public class ServerRequests extends Activity{
         //setContentView(R.layout.json_request);
         msgResponse = findViewById(R.id.msgResponse);
 
+
     }
 
 
     public void makeJsonObjReq() {
-
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
-                "http://coms-309-jr-6.misc.iastate.edu:8080/tiles", null,
+                "http://coms-309-jr-6.misc.iastate.edu:8080/tiles/1", null,
                 new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.d(TAG, response.toString());
-                        msgResponse.setText(response.toString());
+
+                        try {
+                            int id = response.getInt("id");
+                            int centerX = response.getInt("centerX");
+                            int centerY = response.getInt("centerY");
+                            boolean hasPlayer = response.getBoolean("hasPlayer");
+
+                            jsonResponse = "";
+                            jsonResponse = "id: " + id + "\n\n";
+                            jsonResponse = "centerX " + centerX + "\n\n";
+                            jsonResponse = "centerY " + centerY + "\n\n";
+                            jsonResponse = "hasPlayer " + hasPlayer + "\n\n";
+
+                            msgResponse.setText(jsonResponse);
+
+                        }
+                        catch (JSONException e){
+
+                        }
+
+                        //msgResponse.setText(response.toString());
+                        //callback.onSuccess(response);
                     }
                 }, new Response.ErrorListener() {
 
@@ -68,6 +94,8 @@ public class ServerRequests extends Activity{
                 return params;
             }
             */
+
+
         };
 
         // Adding request to request queue
