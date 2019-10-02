@@ -36,6 +36,7 @@ public class ServerRequests extends Activity{
 
 
     public void putJsonResponse(final HexTile hex) {
+
         JSONObject parms = null;
         parms = new JSONObject();
         try {
@@ -56,18 +57,6 @@ public class ServerRequests extends Activity{
 
                     public void onResponse(JSONObject response){
                         Log.d(TAG, response.toString());
-
-                        /*try{
-                            response.put("id", hex.order);
-                            response.put("centerX", hex.getCenterX());
-                            response.put("centerY", hex.getCenterY());
-                            response.put("hasPlayer", hex.hasPlayer());
-                            response.put("new", false);
-                        }
-                        catch (JSONException e){
-                            e.printStackTrace();
-                            Toast.makeText(getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                        }*/
                     }
                 }, new Response.ErrorListener() {
 
