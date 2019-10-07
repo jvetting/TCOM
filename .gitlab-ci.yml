@@ -1,7 +1,6 @@
 # Stages of pipeline, should match with stage tag inside each job.
 # Each stages executes in sequence, if previous job fails, then all the preceeding jobs 
 # are skipped.
-
 stages:
  - mavenbuild
  - maventest
@@ -32,8 +31,8 @@ script:
    - cd Backend
    - mvn test  
    artifacts:    
-    paths:       
-     -   Backend/target/*.
+  paths:       
+    - Backend/target/*.
      
 # Below stage builds, deploys and executes the jar as service.
 # Make sure there is /target directory in your server, else script will fail, or use any 
@@ -45,7 +44,7 @@ autoDeploy:
   tags:
    -  shell
   script:
-  -   cd Spring
+  -   cd Backend
   -   mvn package
   -   sudo mv target/*.jar /target/web-demo.jar
   -   sudo systemctl stop systemd-web-demo
