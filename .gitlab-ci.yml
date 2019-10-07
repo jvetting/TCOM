@@ -14,10 +14,10 @@ stages:
 maven-build:  
  stage: mavenbuild  
  tags:    
- -   shell   
+ - shell   
 script:    
- -   cd Spring    
- -   mvn package -B 
+ - cd Spring    
+ - mvn package -B 
  
  # artifacts are created when job executes successfully, and can be manually downloaded from GitLab GUI.
  # artifacts are not mandatory, but it is  good practice, in case auto deploy fails, you 
@@ -25,10 +25,10 @@ script:
  maven-test:
   stage: maventest  
   tags:    
-   -   shell       
+   - shell       
   script:    
-   -   cd Spring
-   -   mvn test  
+   - cd Spring
+   - mvn test  
    artifacts:    
     paths:       
      -    Spring/target/*.
