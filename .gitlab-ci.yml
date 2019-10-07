@@ -14,10 +14,10 @@ stages:
 maven-build:
  stage: mavenbuild
  tags:
- - shell   
-script:
- -cd Backend
- - mvn package -B 
+  - shell   
+ script:
+  - cd Backend
+  - mvn package -B 
  
 # artifacts are created when job executes successfully, and can be manually downloaded from GitLab GUI.
 # artifacts are not mandatory, but it is  good practice, in case auto deploy fails, you 
@@ -39,7 +39,7 @@ maven-test:
 autoDeploy:  
  stage: autodeploy 
  tags:
-  -  shell
+  - shell
  script:
   - cd Backend
   - mvn package
