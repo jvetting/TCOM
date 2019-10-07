@@ -15,8 +15,9 @@ maven-build:
  stage: mavenbuild  
  tags:    
  - shell   
-script:    
- - cd Spring    
+script:
+ -cd Backend
+ #- cd Spring    
  - mvn package -B 
  
  # artifacts are created when job executes successfully, and can be manually downloaded from GitLab GUI.
