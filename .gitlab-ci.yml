@@ -6,7 +6,7 @@ stages:
  - maventest
  - autodeploy
  - androidbuild
- - androidtes
+ - androidtest
 
 # tags: "shell" should match with the tag name provided to runner, for spring runner should execute in shell.
 # Notice that in petclinic project, the spring project is in root of master, if yours is in# folder then cd to that folder.
@@ -28,11 +28,11 @@ script:
   tags:    
    - shell       
   script:    
-   - cd Spring
+   - cd Backend
    - mvn test  
    artifacts:    
     paths:       
-     -    Spring/target/*.
+     -   Backend/target/*.
      
 # Below stage builds, deploys and executes the jar as service.
 # Make sure there is /target directory in your server, else script will fail, or use any 
