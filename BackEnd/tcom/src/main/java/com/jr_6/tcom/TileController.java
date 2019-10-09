@@ -62,8 +62,20 @@ public class TileController {
     }
     
     
-    @PutMapping(path = "/tiles/{id}")
+    @RequestMapping(method = RequestMethod.PUT, path = "/tiles/{id}")
     public String updateTile(@RequestBody Tiles t, @PathVariable int id) {
+    	/**
+        return repository.findById(id)
+        	      .map(employee -> {
+        	        employee.setName(newEmployee.getName());
+        	        employee.setRole(newEmployee.getRole());
+        	        return repository.save(employee);
+        	      })
+        	      .orElseGet(() -> {
+        	        newEmployee.setId(id);
+        	        return repository.save(newEmployee);
+        	      });
+    	**/
     	Optional<Tiles> old = tilesRepository.findById(id);
     	old.get().setCenterX(t.getCenterX());
     	old.get().setCenterY(t.getCenterY());
