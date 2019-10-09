@@ -61,7 +61,7 @@ android-build:
  tags:
  - android_tag
  script:
-  - cd Experiments/android/com/mygdx/game/
+  - cd Experiments/android/src/com/mygdx/game/
   - AndroidLauncher.java run
  artifacts:
   paths:
