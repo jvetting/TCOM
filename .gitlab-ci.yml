@@ -63,11 +63,11 @@ android-build:
  tags:
  - android_tag
  script:
-  - cd Experiments/android/src/com/mygdx/game/
-  - run AndroidLauncher.java
+  - cd Experiments/
+  - ./gradlew assemble
  artifacts:
   paths:
-  - /Experiments/android/src/com/mygdx/game/
+  - /Experiments/android/
   
 # To run Android unit tests.    
 unitTests: 
