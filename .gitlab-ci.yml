@@ -26,6 +26,8 @@ maven-build:
 # can manually download the jar.
 maven-test:
  stage: maventest
+  only:
+  - master
  tags:
   - shell
  script:
@@ -41,6 +43,8 @@ maven-test:
 # If you are changing the folder, reflect the change in systemd-web  -demo service 
 autoDeploy:  
  stage: autodeploy 
+ only:
+ - master
  tags:
   - shell
  script:
@@ -59,6 +63,8 @@ autoDeploy:
 #android-build:
  #image: javiersantos/android-ci:latest 
  #stage: androidbuild  
+ #only:
+ #- master
  #before_script:
   #- export GRADLE_USER_HOME=`pwd`/.gradle
   #- chmod +x ./Experiments/gradlew
@@ -75,6 +81,8 @@ autoDeploy:
 #unitTests: 
  #image: javiersantos/android-ci:latest
  #stage: androidtest 
+ #only:
+ #- master
  #before_script:
   #- export GRADLE_USER_HOME=`pwd`/.gradle    
   #- chmod +x ./Android_test/gradlew 
