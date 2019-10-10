@@ -24,7 +24,7 @@ public class TileController {
     @RequestMapping(method = RequestMethod.POST, path = "/tiles/new")
     public String saveTile(Tiles tile) {
         tilesRepository.save(tile);
-        return "New Tile "+ tile.getId() + "at (" + tile.getCenterX() +"," + tile.getCenterY() +")" + " has player =" + tile.getHasPlayer() +" SAVED";
+        return "New Tile "+ tile.getId() + "at (" + tile.getCenterX() +"," + tile.getCenterY() +") Saved" + "has player =" + tile.getHasPlayer();//tile.getName() + " Saved";
     }
 	
     
