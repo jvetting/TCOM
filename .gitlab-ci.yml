@@ -59,7 +59,7 @@ android-build:
  stage: androidbuild  
  before_script:
   - export GRADLE_USER_HOME=`pwd`/.gradle
-  - chmod +x ./Experiments/android/
+  - chmod +x ./Experiments/android/gradlew
  tags:
  - android_tag
  script:
