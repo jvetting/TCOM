@@ -1,8 +1,6 @@
 # Stages of pipeline, should match with stage tag inside each job.
 # Each stages executes in sequence, if previous job fails, then all the preceeding jobs 
 # are skipped.
-only: master
- 
 stages:
  - mavenbuild
  - maventest
@@ -15,6 +13,8 @@ stages:
 # maven -B means batch mode (i.e. not interactive)
 maven-build:
  stage: mavenbuild
+ only:
+  - master
  tags:
   - shell   
  script:
