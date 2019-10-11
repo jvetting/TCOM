@@ -63,7 +63,7 @@ project(":android") {
     android {
         signingConfigs {
             release {
-                storeFile file("debug.jks")
+                storeFile file("debug.keystore")
                 storePassword "Tcomjtaj_69"
                 keyAlias "alias_name"
                 keyPassword "Tcomjtaj_69"
