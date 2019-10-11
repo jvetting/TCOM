@@ -60,12 +60,14 @@ project(":android") {
 
     configurations { natives }
     
-    buildTypes{
-        release{
-            storeFile file("debug.keystore")
-            storePassword "Tcomjtaj_69"
-            keyAlias "alias_name"
-            keyPassword "Tcomjtaj_69"
+    android {
+        buildTypes {
+            release {
+                storeFile file("debug.keystore")
+                storePassword "Tcomjtaj_69"
+                keyAlias "alias_name"
+                keyPassword "Tcomjtaj_69"
+            }
         }
     }
 
