@@ -63,23 +63,23 @@ autoDeploy:
 # building apk.   
 # Ensure the tag matches with the tag created for Android runner
 # Android runner should have docker as executor.
-#android-build:
- #image: javiersantos/android-ci:latest 
- #stage: androidbuild  
- #only:
- # - master
- #- 12-configuring-ci-cd
- #before_script:
-  #- export GRADLE_USER_HOME=`pwd`/.gradle
-  #- chmod +x ./Experiments/gradlew
- #tags:
- #- android_tag
- #script:
-  #- cd Experiments/
-  #- ./gradlew assemble
- #artifacts:
-  #paths:
-  #- /Experiments/android/
+android-build:
+ image: javiersantos/android-ci:latest 
+ stage: androidbuild  
+ only:
+  - master
+  - 12-configuring-ci-cd
+ before_script:
+  - export GRADLE_USER_HOME=`pwd`/.gradle
+  - chmod +x ./Experiments/gradlew
+ tags:
+  - android_tag
+ script:
+  - cd Experiments/
+  - ./gradlew assemble
+ artifacts:
+  paths:
+   - /Experiments/android/
   
 # To run Android unit tests.    
 #unitTests: 
