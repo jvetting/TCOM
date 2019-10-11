@@ -67,6 +67,14 @@ project(":android") {
                 storePassword "Tcomjtaj_69"
                 keyAlias "alias_name"
                 keyPassword "Tcomjtaj_69"
+                
+                def keystorePropertiesFile = rootProject.file("keystore.properties");
+                def keystoreProperties = new Properties()
+                keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+                storeFile file(keystoreProperties['storeFile'])
+                storePassword keystoreProperties['storePassword']
+                keyAlias keystoreProperties['alias_name']
+                keyPassword keystoreProperties['Tcomjtaj_69']
             }
         }
         buildTypes {
