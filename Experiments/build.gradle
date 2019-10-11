@@ -59,6 +59,15 @@ project(":android") {
     apply plugin: "android"
 
     configurations { natives }
+    
+    buildTypes{
+        release{
+            storeFile file("debug.keystore")
+            storePassword "Tcomjtaj_69"
+            keyAlias "alias_name"
+            keyPassword "Tcomjtaj_69"
+        }
+    }
 
     dependencies {
         implementation project(":core")
