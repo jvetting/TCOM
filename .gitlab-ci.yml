@@ -76,7 +76,7 @@ android-build:
   - android_tag
  script:
   - cd Experiments/
-  - ./gradlew assemble --stacktrace
+  - ./gradlew assemblerelease --stacktrace
  artifacts:
   paths:
    - /Experiments/android/
