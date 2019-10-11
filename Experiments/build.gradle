@@ -61,12 +61,23 @@ project(":android") {
     configurations { natives }
     
     android {
+        signingConfigs {
+            release {
+                storeFile file("debug.jks")
+                storePassword "Tcomjtaj_69"
+                keyAlias "alias_name"
+                keyPassword "Tcomjtaj_69"
+            }
+        }
         buildTypes {
             release {
                 storeFile file("debug.keystore")
                 storePassword "Tcomjtaj_69"
                 keyAlias "alias_name"
                 keyPassword "Tcomjtaj_69"
+            }
+            debug {
+                signingConfig signingConfigs.config
             }
         }
     }
