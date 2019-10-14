@@ -72,7 +72,7 @@ public class TileController {
     
     @PutMapping(path = "/tiles/{id}")
     public Tiles updateTile(@RequestBody Tiles t, @PathVariable int id) {
-    	
+    	/**
         return tilesRepository.findById(id)
         	      .map(tile -> {
         	        tile.setCenterX(t.getCenterX());
@@ -85,13 +85,13 @@ public class TileController {
         	        return tilesRepository.save(t);
         	      });
     	
-    	/**
+    	**/
     	Optional<Tiles> old = tilesRepository.findById(id);
     	old.get().setCenterX(t.getCenterX());
     	old.get().setCenterY(t.getCenterY());
     	old.get().setHasPlayer(t.getHasPlayer());
-    	return "Put tile " + id + " at (" + old.get().getCenterX() + "," + old.get().getCenterY() +")" + " has player:" + old.get().getHasPlayer();
-    	**/
+    	//return "Put tile " + id + " at (" + old.get().getCenterX() + "," + old.get().getCenterY() +")" + " has player:" + old.get().getHasPlayer();
+    	return old.get();
     }
     
     @DeleteMapping(path = "/tiles/{id}")
