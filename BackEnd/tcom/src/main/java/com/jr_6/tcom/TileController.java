@@ -4,11 +4,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,14 +22,20 @@ public class TileController {
 
     private final Logger logger = LoggerFactory.getLogger(TileController.class);
     
-    
+    /**
     @RequestMapping(method = RequestMethod.POST, path = "/tiles/new")
     public String saveTile(Tiles tile) {
         tilesRepository.save(tile);
         return "New Tile "+ tile.getId() + "at (" + tile.getCenterX() +"," + tile.getCenterY() +") Saved" + "has player =" + tile.getHasPlayer();//tile.getName() + " Saved";
     }
-	
+	**/
     
+    
+    @PostMapping(path = "/tiles/new", consumes = "application/json", produces = "application/json")
+    @ResponseBody
+    public Tiles saveTile(@RequestBody Tiles tile) {
+        return tilesRepository.save(tile);
+    }
     /**
     @RequestMapping(method = RequestMethod.POST, path = "/tiles/new/{tileName}")
     public String saveTile(@PathVariable("tileName") String name) {
@@ -62,25 +70,28 @@ public class TileController {
     }
     
     
-    @RequestMapping(method = RequestMethod.PUT, path = "/tiles/{id}")
-    public String updateTile(@RequestBody Tiles t, @PathVariable int id) {
-    	/**
-        return repository.findById(id)
-        	      .map(employee -> {
-        	        employee.setName(newEmployee.getName());
-        	        employee.setRole(newEmployee.getRole());
-        	        return repository.save(employee);
+    @PutMapping(path = "/tiles/{id}")
+    public Tiles updateTile(@RequestBody Tiles t, @PathVariable int id) {
+    	
+        return tilesRepository.findById(id)
+        	      .map(tile -> {
+        	        tile.setCenterX(t.getCenterX());
+        	        tile.setCenterY(t.getCenterY());
+        	        tile.setHasPlayer(t.getHasPlayer());
+        	        return tilesRepository.save(tile);
         	      })
         	      .orElseGet(() -> {
-        	        newEmployee.setId(id);
-        	        return repository.save(newEmployee);
+        	        t.setId(id);
+        	        return tilesRepository.save(t);
         	      });
-    	**/
+    	
+    	/**
     	Optional<Tiles> old = tilesRepository.findById(id);
     	old.get().setCenterX(t.getCenterX());
     	old.get().setCenterY(t.getCenterY());
     	old.get().setHasPlayer(t.getHasPlayer());
     	return "Put tile " + id + " at (" + old.get().getCenterX() + "," + old.get().getCenterY() +")" + " has player:" + old.get().getHasPlayer();
+    	**/
     }
     
     @DeleteMapping(path = "/tiles/{id}")
