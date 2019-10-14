@@ -30,7 +30,6 @@ public class TileController {
     }
 	**/
     
-    
     @PostMapping(path = "/tiles/new", consumes = "application/json", produces = "application/json")
     @ResponseBody
     public Tiles saveTile(@RequestBody Tiles tile) {
